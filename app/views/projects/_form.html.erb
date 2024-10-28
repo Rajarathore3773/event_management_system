@@ -1,0 +1,64 @@
+<%= form_with model: @project, local: true do |form|%>
+  <div class= "row">
+    <div class = "col-lg-4"> 
+        <div class="from-group">
+          <%=form.label :title, class:'mb-2'%>
+          <%= form.text_field :title, class:"form-control form-control-lg rounded-0"%>
+        </div>
+        <% @project.errors.full_messages_for(:title).each do |msg|%>
+            <p class = "text-danger"><%= msg%> </p>
+        <% end%>
+    </div>
+    <div class="col-lg-4">
+      <div class = "form-group">
+        <%= form.label :description, class:"mb-2"%>
+        <%= form.text_field :description, class:"form-control form-control-lg rounded-0"%> 
+      </div>
+    </div>
+  </div>
+        
+
+  <div class="row">
+    <div class= "col-lg-4 mt-4">
+      <div class="form-group">
+      <%= form.label :start_date , class:"mb-2"%>
+      <%= form.date_field :start_date, class:"form-control form-control-lg rounded-0"%>
+      </div>
+      
+      <% @project.errors.full_messages_for(:start_date).each do |msg|%>
+      <p class="text-danger"> <%= msg %> </p> 
+      <%end%>
+    </div>
+
+    <div class= "col-lg-4 mt-4">
+      <div class="form-group">
+        <%= form.label :end_date , class:"mb-2"%>
+        <%= form.date_field :end_date, class:"form-control form-control-lg rounded-0"%>
+      </div>
+      
+        <% @project.errors.full_messages_for(:end_date).each do |msg|%>
+        <p class="text-danger"> <%= msg %> </p> 
+        <%end%>
+    </div>
+  </div>
+  <div class="col-lg-4 mt-4">
+  <div class="form-group">
+    <%= form.label :status, class: "mb-2" %>
+    <%= form.select :status, options_for_select([['Not_Started', 'not_started'],['In Progress', 'in_progress'], ['Completed', 'completed']]) , class: "form-control form-control-lg rounded-0" %>
+  </div>
+  <br>
+
+  <% @project.errors.full_messages_for(:status).each do |msg| %>
+    <p class="text-danger"> <%= msg %> </p>
+  <% end %>
+</div>
+
+<div class="row">
+   <div class= "col-lg-4 mt-2">
+     <%= form.submit class: "btn btn-primary btn-lg mb-4 rounded-0"%>
+     <%= link_to "Back To Projects" , projects_path,class: "btn btn-outline-primary btn-lg mb-4 rounded-0" %>
+   </div>
+</div>
+
+<%end%>
+

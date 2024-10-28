@@ -4,10 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-
-  def admin?
-    role == 'admin'
-  end
+  has_many :projects, dependent: :destroy
 
   def project_manager?
     role == 'project_manager'
