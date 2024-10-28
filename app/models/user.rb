@@ -9,7 +9,9 @@ class User < ApplicationRecord
   def set_default_role
     self.role ||= 'regular_user' # Set default role to 'regular_user' if not chosen
   end
-  
+ 
+  has_many :projects, dependent: :destroy
+
   def project_manager?
     role == 'project_manager'
   end
