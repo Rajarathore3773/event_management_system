@@ -7,6 +7,13 @@ class User < ApplicationRecord
          has_many :projects
          has_many :assigned_projects, through: :project_users, source: :project
 
+         
+  before_create :set_default_role
+
+  def set_default_role
+    self.role ||= 'regular_user' # Set default role to 'regular_user' if not chosen
+  end
+ 
 
   def project_manager?
     role == 'project_manager'
@@ -15,4 +22,8 @@ class User < ApplicationRecord
   def regular_user?
     role == 'regular_user'
   end
+
+
+
+
 end
