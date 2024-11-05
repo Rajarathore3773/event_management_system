@@ -1,6 +1,6 @@
 class Project < ApplicationRecord
   belongs_to :user
-  has_many :project_users
+  has_many :project_users, dependent: :destroy
   has_many :users, through: :project_users
 
   enum status: { not_started: 0, in_progress: 1, completed: 2 }
