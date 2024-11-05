@@ -1,16 +1,17 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
+  before_action :authorize_project_manager, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   def index 
-    @projects = Project.all
+    @projects = current_user.projects
   end
 
   def show
   end
 
   def new 
-    @project = Project.new
+    @project = current_user.projects.build
     if @project.nil?
       redirect_to root_path, notice: "Project could not be created."
     end
@@ -44,14 +45,20 @@ class ProjectsController < ApplicationController
       redirect_to projects_path, alert: 'Failed to delete the project.'
     end
   end
-
+ 
   private 
   
   def set_project
-    @project = Project.find(params[:id])
+    @project = current_user.projects.find_by(id: params[:id])
+    redirect_to projects_path, alert: "Project not found or you don't have access." if @project.nil?
   end
 
   def project_params
     params.require(:project).permit(:title, :description, :start_date, :end_date, :status)
   end
+
+  def authorize_project_manager
+    redirect_to(root_path, alert: "You are not authorized to perform this action.") unless current_user.role == "project_manager"
+  end
+
 end

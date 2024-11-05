@@ -1,0 +1,10 @@
+<h2>Edit Role for <%= @project_user.user.email %></h2>
+
+<%= form_with url: update_user_project_path(@project, user_id: @project_user.user.id), method: :patch, local: true do |f| %>
+  <div class="form-group">
+    <%= f.label :role, "Select New Role" %>
+    <%= f.select :role, options_for_select(["Team Lead", "Developer"], @project_user.role), class: 'form-control' %>
+  </div>
+
+  <%= f.submit "Update Role", class: "btn btn-primary" %>
+<% end %>
